@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/5ded850d1b.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral Vogue - E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Example CSS to make the cart look nicer */
+        #cart table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #cart table td {
+            padding: 10px;
+            text-align: center;
+        }
+        #cart table img {
+            width: 100px;
+            height: auto;
+        }
+        .subtotal, .price {
+            width: 100px;
+        }
+        .normal {
+            padding: 10px 15px;
+            background-color: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .normal:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <section id="header">
+        <a href="#"><img src="logo.jpg" class="logo" alt="Astral Vogue Logo" width="70" height="70"></a>
+        <h1>ASTRAL VOGUE</h1>
+        <div>
+            <ul id="navbar2">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="active" href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="shop-header">
+        <h2>~Cart~</h2>
+    </section>
+
+    <section id="cart" class="section-p1">
+        <table>
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Image</td>
+                    <td>Product</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Subtotal</td>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Example Item -->
+                <tr class="cart-item">
+                    <td><button class="remove-item"><i class="far fa-times-circle"></i></button></td>
+                    <td><img src="product1.jpg" alt="Product Image"></td>
+                    <td>Men's Cardigan</td>
+                    <td class="price">Rs 1900</td>
+                    <td><input type="number" class="quantity" value="1"></td>
+                    <td class="subtotal">Rs 1900</td>
+                </tr>
+                <tr class="cart-item">
+                    <td><button class="remove-item"><i class="far fa-times-circle"></i></button></td>
+                    <td><img src="product1.jpg" alt="Product Image"></td>
+                    <td>Men's Cardigan</td>
+                    <td class="price">Rs 1900</td>
+                    <td><input type="number" class="quantity" value="1"></td>
+                    <td class="subtotal">Rs 1900</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+        <div id="coupon">
+            <h3>Apply Coupon</h3>
+            <div>
+                <input type="text" placeholder="Enter Coupon">
+                <button class="normal">Apply</button>
+            </div>
+        </div>
+        <div id="subtotal">
+            <h3>Cart Total</h3>
+            <table>
+                <tr>
+                    <td>Cart Subtotal</td>
+                    <td id="cart-subtotal">Rs 3800</td>
+                </tr>
+                <tr>
+                    <td>Shipping</td>
+                    <td>Rs 30</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong id="total-price">Rs 3830</strong></td>
+                </tr>
+            </table>
+            <button class="normal">Proceed To Checkout</button>
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img src="logo.jpg" width="70" height="70">
+            <h4>Contact Us</h4>
+            <p><strong>Phone:</strong> +91 XXXXX XXXXX</p>
+            <p><strong>Address:</strong> XYZ Street, Bhopal, Madhya Pradesh</p>
+            <p><strong>Email:</strong> astralvogue@gmail.com</p>
+        </div>
+        <div class="col">
+            <div class="follow">
+                <h4>Follow us</h4>
+                <div class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-pinterest-p"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store or Google Play</p>
+            <div class="row">
+                <img src="appstore icon.jpg">
+                <img src="play store icon.png">
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript to handle cart actions
+        
+        // Function to update the subtotal for an item
+        function updateSubtotal(item) {
+            const price = parseFloat(item.querySelector('.price').textContent.replace('Rs ', ''));
+            const quantity = item.querySelector('.quantity').value;
+            const subtotal = price * quantity;
+            item.querySelector('.subtotal').textContent = 'Rs ' + subtotal.toFixed(2);
+        }
+
+        // Function to update the total price
+        function updateTotal() {
+            let cartSubtotal = 0;
+            document.querySelectorAll('.cart-item').forEach(item => {
+                const subtotal = parseFloat(item.querySelector('.subtotal').textContent.replace('Rs ', ''));
+                cartSubtotal += subtotal;
+            });
+            const shipping = 30;  // Fixed shipping cost for now
+            const total = cartSubtotal + shipping;
+
+            document.getElementById('cart-subtotal').textContent = 'Rs ' + cartSubtotal.toFixed(2);
+            document.getElementById('total-price').textContent = 'Rs ' + total.toFixed(2);
+        }
+
+        // Handle quantity change
+        document.querySelectorAll('.quantity').forEach(input => {
+            input.addEventListener('input', function() {
+                const item = this.closest('.cart-item');
+                updateSubtotal(item);
+                updateTotal();
+            });
+        });
+
+        // Handle item removal
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const item = this.closest('.cart-item');
+                item.remove();
+                updateTotal();
+            });
+        });
+
+        // Initialize cart total
+        updateTotal();
+    </script>
+
+</body>
+</html>
